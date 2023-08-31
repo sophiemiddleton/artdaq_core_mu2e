@@ -27,7 +27,7 @@ public:
 			: NumberOfHits(0) {}
 	};
 
-	struct CalorimeterBoardID
+	/*struct CalorimeterBoardID
 	{
 		uint16_t BoardID : 10;
 		uint16_t ChannelStatusFlagsA : 6;
@@ -36,24 +36,46 @@ public:
 
 		CalorimeterBoardID()
 			: BoardID(0), ChannelStatusFlagsA(0), ChannelStatusFlagsB(0), unused(0) {}
-	};
+	};*/
 
 	struct CalorimeterHitReadoutPacket
 	{
-		uint16_t ChannelNumber : 6;
-		uint16_t DIRACA : 10;
+	  uint16_t DetectorType : 3; // subdetector type e.g. CALO=0, CAPHRI = 1, TRAD = 2, LASER = 3
+	  uint16_t BoardID : 8; //unique board ID from 0 - 255
+		uint16_t ChannelNumber : 6; // channel ID from 0-19
+		uint16_t DIRACA;
 		uint16_t DIRACB;
+		// TODO samples?
 		uint16_t ErrorFlags;
 		uint16_t Time;
 		uint8_t NumberOfSamples;
 		uint8_t IndexOfMaxDigitizerSample;
 
 		CalorimeterHitReadoutPacket()
-			: ChannelNumber(0), DIRACA(0), DIRACB(0), ErrorFlags(0), Time(0), NumberOfSamples(0), IndexOfMaxDigitizerSample(0) {}
+			: DetectorType(0), BoardID(0), ChannelNumber(0), DIRACA(0), DIRACB(0), ErrorFlags(0), Time(0), NumberOfSamples(0), IndexOfMaxDigitizerSample(0) {}
+	};
+	
+	struct CalorimeterFooterPacket
+	{
+	  uint16_t DetectorType : 3; // subdetector type e.g. CALO=0, CAPHRI = 1, TRAD = 2, LASER = 3
+	  uint16_t BoardID : 8; //unique board ID from 0 - 255
+	  uint16_t unused : 1;
+		uint16_t ChannelStatusFlagA : 4;
+		uint16_t ChannelStatusFlagC;
+		uint16_t DIRACA;
+		uint16_t DIRACB;
+		uint16_t DIRACC;
+		uint16_t DIRACD;
+		uint16_t DIRACA;
+		uint16_t DIRACE;
+		uint16_t DIRACF;
+		CalorimeterFooterPacket ()
+		  : DetectorType(0), BoardID(0), unused(0), ChannelStatusFlagA(0), ChannelStatusFlagC(0) {}
+	  
 	};
 
-	std::unique_ptr<CalorimeterDataPacket> GetCalorimeterData(size_t blockIndex) const;
-	std::unique_ptr<CalorimeterBoardID> GetCalorimeterBoardID(size_t blockIndex) const;
+	std::unique_ptr<CalorimeterDataPacket> GetCalorimeterData(size_t blockIndex) const; //TODO - is this needed?
+	//std::unique_ptr<CalorimeterBoardID> GetCalorimeterBoardID(size_t blockIndex) const; TODO remove this 
 	std::vector<std::pair<CalorimeterHitReadoutPacket, std::vector<uint16_t>>> GetCalorimeterHits(size_t blockIndex) const;
 	std::vector<std::pair<CalorimeterHitReadoutPacket, uint16_t>> GetCalorimeterHitsForTrigger(size_t blockIndex) const;
 	#endif
