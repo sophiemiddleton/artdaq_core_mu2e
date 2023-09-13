@@ -69,5 +69,31 @@ The following are functions related to the calorimeter:
   const size_t waveformMaximumIndex(std::vector<adc_t> const& waveform);
 
 ```
+where:
 
+* fillCalorimeterDataPacket
+
+This function extracts the Raw ID (CaloSiPMId) information, files the calorimeterHitData packet with relevent details
+
+
+* addCaloHitToCaloPacket
+
+This function adds a new hit to the vector of hits which already exists.
+
+
+* fillCalorimeterHeaderDataPacket
+
+This function also looks at the Raw ID and extracts useful information for the HeaderDataPacket
+
+* fillHeaderByteAndPacketCounts
+
+This function adds packet counts to the header number of bytes
+
+* processCalorimeterData
+
+* fillCalorimeterDMABlocks
+
+* fillCalorimeterDataStream
+
+* printCalorimeterData
 
