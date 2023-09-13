@@ -1,21 +1,21 @@
 
-#ifndef MU2E_ARTDAQ_CORE_OVERLAYS_CALORIMETERFRAGMENT_HH
-#define MU2E_ARTDAQ_CORE_OVERLAYS_CALORIMETERFRAGMENT_HH
+#ifndef MU2E_ARTDAQ_CORE_DATA_CalorimeterFragmentOld_HH
+#define MU2E_ARTDAQ_CORE_DATA_CalorimeterFragmentOld_HH
 
 #include "artdaq-core-mu2e/Data/ArtFragment.hh"
 
 namespace mu2e {
-class CalorimeterFragment : public ArtFragment
+class CalorimeterFragmentOld : public ArtFragment
 {
 public:
 
-	CalorimeterFragment() : ArtFragment() {}
+	CalorimeterFragmentOld() : ArtFragment() {}
 
-	CalorimeterFragment(std::vector<uint8_t> data)
+	CalorimeterFragmentOld(std::vector<uint8_t> data)
 		: ArtFragment(data) {}
 
 	#if HIDE_FROM_ROOT
-	explicit CalorimeterFragment(DTCLib::DTC_SubEvent const& f)
+	explicit CalorimeterFragmentOld(DTCLib::DTC_SubEvent const& f)
 		: ArtFragment(f) {}
 
 
@@ -27,7 +27,7 @@ public:
 			: NumberOfHits(0) {}
 	};
 
-	/*struct CalorimeterBoardID
+	struct CalorimeterBoardID
 	{
 		uint16_t BoardID : 10;
 		uint16_t ChannelStatusFlagsA : 6;
@@ -36,50 +36,28 @@ public:
 
 		CalorimeterBoardID()
 			: BoardID(0), ChannelStatusFlagsA(0), ChannelStatusFlagsB(0), unused(0) {}
-	};*/
+	};
 
 	struct CalorimeterHitReadoutPacket
 	{
-	  uint16_t DetectorType : 3; // subdetector type e.g. CALO=0, CAPHRI = 1, TRAD = 2, LASER = 3
-	  uint16_t BoardID : 8; //unique board ID from 0 - 255
-		uint16_t ChannelNumber : 6; // channel ID from 0-19
-		uint16_t DIRACA;
+		uint16_t ChannelNumber : 6;
+		uint16_t DIRACA : 10;
 		uint16_t DIRACB;
-		// TODO samples?
 		uint16_t ErrorFlags;
 		uint16_t Time;
 		uint8_t NumberOfSamples;
 		uint8_t IndexOfMaxDigitizerSample;
 
 		CalorimeterHitReadoutPacket()
-			: DetectorType(0), BoardID(0), ChannelNumber(0), DIRACA(0), DIRACB(0), ErrorFlags(0), Time(0), NumberOfSamples(0), IndexOfMaxDigitizerSample(0) {}
-	};
-	
-	struct CalorimeterFooterPacket
-	{
-	  uint16_t DetectorType : 3; // subdetector type e.g. CALO=0, CAPHRI = 1, TRAD = 2, LASER = 3
-	  uint16_t BoardID : 8; //unique board ID from 0 - 255
-	  uint16_t unused : 1;
-		uint16_t ChannelStatusFlagA : 4;
-		uint16_t ChannelStatusFlagC;
-		uint16_t DIRACA;
-		uint16_t DIRACB;
-		uint16_t DIRACC;
-		uint16_t DIRACD;
-		uint16_t DIRACA;
-		uint16_t DIRACE;
-		uint16_t DIRACF;
-		CalorimeterFooterPacket ()
-		  : DetectorType(0), BoardID(0), unused(0), ChannelStatusFlagA(0), ChannelStatusFlagC(0) {}
-	  
+			: ChannelNumber(0), DIRACA(0), DIRACB(0), ErrorFlags(0), Time(0), NumberOfSamples(0), IndexOfMaxDigitizerSample(0) {}
 	};
 
-	std::unique_ptr<CalorimeterDataPacket> GetCalorimeterData(size_t blockIndex) const; //TODO - is this needed?
-	//std::unique_ptr<CalorimeterBoardID> GetCalorimeterBoardID(size_t blockIndex) const; TODO remove this 
+	std::unique_ptr<CalorimeterDataPacket> GetCalorimeterData(size_t blockIndex) const;
+	std::unique_ptr<CalorimeterBoardID> GetCalorimeterBoardID(size_t blockIndex) const;
 	std::vector<std::pair<CalorimeterHitReadoutPacket, std::vector<uint16_t>>> GetCalorimeterHits(size_t blockIndex) const;
 	std::vector<std::pair<CalorimeterHitReadoutPacket, uint16_t>> GetCalorimeterHitsForTrigger(size_t blockIndex) const;
 	#endif
 };
 }  // namespace mu2e
 
-#endif  // MU2E_ARTDAQ_CORE_OVERLAYS_CALORIMETERFRAGMENT_HH
+#endif  // MU2E_ARTDAQ_CORE_OVERLAYS_CalorimeterFragmentOld_HH

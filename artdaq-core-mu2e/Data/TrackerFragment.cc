@@ -1,7 +1,7 @@
 #include "artdaq-core-mu2e/Data/TrackerFragment.hh"
 
 #include <vector>
-#include "TrackerFragment.hh"
+#include "TrackerFragment.hh" // why include two?
 
 namespace mu2e {
 TrackerFragment::TrackerFragment(DTCLib::DTC_SubEvent const& evt)
