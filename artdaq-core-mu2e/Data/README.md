@@ -91,7 +91,20 @@ This function adds packet counts to the header number of bytes
 
 * processCalorimeterData
 
+This function loops over the digi collection. It extracts a given CaloDigi.
+
+The code then loops over the collection and calls:  fillCalorimeterHeaderDataPacket and fillCalorimeterDataPacket passing in the calo digi to each.
+
+There is then a loop over ROC and DTC and finds all hits for this event coming from the specified DTC/ROC combination.
+
+
+* fillHeaderByteAndPacketCounts
+
+fills the byte count
+
 * fillCalorimeterDMABlocks
+
+Calls fillCalorimeterDataStream, adds the current DataBlock to the current SuperBlock
 
 * fillCalorimeterDataStream
 

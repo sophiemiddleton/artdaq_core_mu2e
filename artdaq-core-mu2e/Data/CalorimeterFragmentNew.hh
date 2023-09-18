@@ -24,7 +24,19 @@ public:
     uint16_t DIRACA;
     uint16_t DIRACB;
     uint16_t LastSampleMarker : 24;//NOTE: could be split up?
-    // TODO samples? - how to deal with variable sample number?
+
+    // there are 4 types of sample length
+    uint16_t SampleType0  : 12;
+    
+		uint16_t SampleType1A : 4;
+		uint16_t SampleType1B : 8;
+		
+		uint16_t SampleType2A : 8;
+		uint16_t SampleType2B : 4;
+		
+		uint16_t SampleType3A : 10;
+		uint16_t SampleType3B : 2;
+
     uint16_t ErrorFlags;
     uint16_t Time;
     uint8_t NumberOfSamples;
