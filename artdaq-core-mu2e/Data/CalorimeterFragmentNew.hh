@@ -27,15 +27,15 @@ public:
 
     // there are 4 types of sample length
     uint16_t SampleType0  : 12;
-    
-		uint16_t SampleType1A : 4;
-		uint16_t SampleType1B : 8;
-		
-		uint16_t SampleType2A : 8;
-		uint16_t SampleType2B : 4;
-		
-		uint16_t SampleType3A : 10;
-		uint16_t SampleType3B : 2;
+
+    uint16_t SampleType1A : 4;
+    uint16_t SampleType1B : 8;
+
+    uint16_t SampleType2A : 8;
+    uint16_t SampleType2B : 4;
+
+    uint16_t SampleType3A : 10;
+    uint16_t SampleType3B : 2;
 
     uint16_t ErrorFlags;
     uint16_t Time;
@@ -48,7 +48,7 @@ public:
 	
 	
 	// Samples: each hit has a variable number of waveform samples stored contigously using many data packets
-	struct CalorimeterSamplePacket
+	/*struct CalorimeterSamplePacket
 	{
 		uint16_t SampleType0  : 12;
 		uint16_t SampleType1 : 4;
@@ -79,7 +79,7 @@ public:
 			}
 			
 		}
-	};
+	};*/
 	
 	// CalorimeterFooterPacket: after transmission of all the hits the event is closed by a final packet containing the informaton about all the chanels that are reconstructed online in the FPGA:
 	struct CalorimeterFooterPacket
